@@ -26,7 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
      Route::resource('/book_shelves', bookSelfCon::class);
      Route::get('/armyCretate', [bookSelfCon::class, 'armyCretate']);
-     Route::get('/armyBookList', [bookSelfCon::class, 'armyBookList']);
+     Route::get('/armyBookList', [bookSelfCon::class, 'armyBookList'])->name('armyBookList');
      //excel file Upload
      Route::get('/uploadExcelCreate', [excelFileUploadCon::class, 'uploadExcelCreate']);
      Route::post('/uploadExcelPost', [excelFileUploadCon::class, 'uploadExcelPost']);
@@ -36,7 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      //Issue
      Route::resource('/issues', issueCon::class);
      Route::get('/returnIssue/{id}', [issueCon::class, 'returnIssue']);
-     Route::post('/returnIssuePost/', [issueCon::class, 'returnIssuePost']);
+     //Route::post('/returnIssuePost/{id}', [issueCon::class, 'returnIssuePost']);
 
      Route::resource('/rankk', renkCon::class);
      Route::post('/test', [bookSelfCon::class, 'test']);

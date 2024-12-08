@@ -39,71 +39,76 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>SL No</th>
-                  <th>Book Catagory</th>
-                  <th>Accession No</th>
-                  <th>Title</th>
+                  <th>ID</th>
+                  
 				  @if($bookCat == 'General Books')
-                  <th>Author</th>
                   <th>Subject</th>
-                  <th>place of publication</th>
+                  <th>Author</th>
+                  <th>Title</th>
+                  <th>place And Publisher</th>
+                  <th>Year</th>
+                  <th>Pages</th>
+                  <th>Edition</th>
+                  <th>Volume</th>
+                  <th>Cost</th>
+                  <th>Location</th>
 				  @else
-				  <th>Types</th>
+                  <th>Title</th>
+				          <th>Publisher</th>
                   <th>Corps</th>
+                  <th>Types and No</th>
+                  <th>Year</th>
+                  <th>Volume/Part</th>
+                  <th>Pages</th>
+                  <th>Cost</th>
+                  <th>Location</th>
 				  @endif
-                  <th>publisher</th>
-                  <th>year of publication</th>
-                  <th>price</th>
-				  @if($bookCat == 'General Books')
-                  <th>edition</th>
-				  @endif
-                  <th>volume</th>
-                  <th>pages</th>
-                  <th>source</th>
-                  <th>location</th>
+
                   <th>Action</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($books as $key=>$book)
                 <tr>
-                  <td>{{++$key}}</td>
-                  <td>{{$book->book_cat}}</td>
                   <td>{{$book->accession}}</td>
-                  <td>{{$book->titlee}}</td>
 				  @if($bookCat == 'General Books')
-                  <td>{{$book->author}}</td>
                   <td>{{$book->subject}}</td>
-                  <td>{{$book->place_of_publication}}</td>
-				  @else
-				  <td>{{($book->types == '0') ? '---':$book->types}}</td>
-				  <td>{{($book->corps == '0') ? '---':$book->corps}}</td>
-				  @endif
-                  <td>{{$book->publisher}}</td>
+                  <td>{{$book->author}}</td>
+                  <td>{{$book->titlee}}</td>
+                  <td>{{$book->place_of_publication}} , {{$book->publisher}}</td>
                   <td>{{($book->year_of_publication == '0') ? '---':$book->year_of_publication}}</td>
-                  <td>{{$book->price}}</td>
-				  @if($bookCat == 'General Books')
-                  <td>{{($book->edition == '0') ? '---':$book->edition}}</td>
-				  @endif
-                  <td>{{($book->volume == '0') ? '---':$book->volume}}</td>
                   <td>{{($book->pages == '0') ? '---':$book->pages}}</td>
-                  <td>{{($book->source == '0') ? '---':$book->source}}</td>
+                  <td>{{($book->edition == '0') ? '---':$book->edition}}</td>
+                  <td>{{($book->volume == '0') ? '---':$book->volume}}</td>
+                  <td>{{$book->price}}</td>
                   <td>{{($book->location == '0') ? '---':$book->location}}</td>
+				  @else
+                  <td>{{$book->titlee}}</td>
+                  <td>{{$book->publisher}}</td>
+                  <td>{{($book->corps == '0') ? '---':$book->corps}}</td>
+                  <td>{{($book->types == '0') ? '---':$book->types}}</td>
+                  <td>{{($book->year_of_publication == '0') ? '---':$book->year_of_publication}}</td>
+                  <td>{{($book->volume == '0') ? '---':$book->volume}}</td>
+                  <td>{{($book->pages == '0') ? '---':$book->pages}}</td>                  
+                  <td>{{$book->price}}</td>
+                  <td>{{($book->location == '0') ? '---':$book->location}}</td>
+				  @endif
+                  
                   <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info">Action</button>
-                      <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
-                        <span class="sr-only">Toggle Dropdown</span>
-                        <div class="dropdown-menu" role="menu">
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                           <a class="dropdown-item" href="{{url('/book_shelves/'.$book->id)}}">View</a>
                           <a class="dropdown-item" href="{{url('book_shelves/'.$book->id.'/edit')}}">Edite</a>
-                          <a class="dropdown-item" href="{{url('book_shelves/'.$book->id)}}">Delete</a>
+                          {{--<a class="dropdown-item" onclick="return confirm_delete()" href="{{url('book_shelves/'.$book->id)}}">Delete</a>--}}
                         </div>
-                      </button>
-                    </div>
+                      </div>
                   </td>
                 </tr>
                 @endforeach
@@ -134,11 +139,11 @@
     $("#example1").DataTable();
     $('#example2').DataTable({
       "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": false,
       "info": true,
-      "autoWidth": false,
+      "autoWidth": true,
     });
   });
 </script>

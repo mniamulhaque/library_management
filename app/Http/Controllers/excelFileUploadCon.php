@@ -61,6 +61,8 @@ class excelFileUploadCon extends Controller
                 $prefix = ($request->book_cat == 'Army Publication') ? 'A' : 'G'; // Alternate between A and B
                 $newCode = $prefix . str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
 
+                if($book_cat == 'General Books'){
+
                 // Insert new record
                 DB::table('book_selves')->insert([
                     'book_cat' => $book_cat,
@@ -79,6 +81,10 @@ class excelFileUploadCon extends Controller
                     'location' => $location, // Store the generated code
                 ]);
                 $inserted++;
+            }else{
+                $message = "Select the correct book category and book file!";
+                return redirect()->back()->with('error', $message);
+            }
             //} else {
                 // Track duplicates
                // $duplicates[] = $titlee;
@@ -112,6 +118,7 @@ class excelFileUploadCon extends Controller
                 // Generate new code based on last ID
                 $prefix = ($request->book_cat == 'Army Publication') ? 'A' : 'G'; // Alternate between A and B
                 $newCode = $prefix . str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
+                 if($book_cat == 'Army Publication'){
 
                 // Insert new record
                 DB::table('book_selves')->insert([
@@ -129,6 +136,10 @@ class excelFileUploadCon extends Controller
                     'location' => $location, // Store the generated code
                 ]);
                 $inserted++;
+                }else{
+                $message = "Select the correct book category and book file!";
+                return redirect()->back()->with('error', $message);
+                }
            // } else {
                 // Track duplicates
                 //$duplicates[] = $titlee;

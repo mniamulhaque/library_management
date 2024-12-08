@@ -69,20 +69,15 @@
                   <td>{{$issue->bookDetails->accession}}</td>
                   <td>{{$issue->return_date}}</td>
                   <td class="h5">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info">Action</button>
-                      <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
-                        <span class="sr-only">Toggle Dropdown</span>
-                        <div class="dropdown-menu" role="menu">
-                          <a href="#" class="dropdown-item modal-trigger" data-toggle="modal" data-target="#modal-default" data-id="{{ $issue->id }}">
-          Issue Modal for {{ $issue->id }}
-        </a>
-                          <a class="dropdown-item" href="{{url('/returnIssue/'.$issue->id)}}">Return</a>
-                          <a class="dropdown-item" href="{{url('issues/'.$issue->id.'/edit')}}">Edite</a>
-                          <a class="dropdown-item" href="{{url('issues/'.$issue->id)}}">Delete</a>
+                      <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                          <a class="dropdown-item" onclick="return confirm_delete()" href="{{url('returnIssue/'.$issue->id)}}">Return</a>
+                          <a class="dropdown-item" href="{{url('issues/'.$issue->id.'/edit')}}">Edit</a>
                         </div>
-                      </button>
-                    </div>
+                      </div>
                    </td>
                 </tr>
                 @endforeach
@@ -100,7 +95,6 @@
     </section>
     <!-- /.content -->
   </div>
-  @include('backend.BookIssue.issueReturnModal')
   @endsection
 
 @push('script')
@@ -122,15 +116,6 @@
     });
   });
 
- document.querySelectorAll('.modal-trigger').forEach(function (el) {
-  el.addEventListener('click', function (e) {
-    e.preventDefault(); // ডিফল্ট আচরণ বন্ধ করা
-    const issueId = el.getAttribute('data-id'); // data-id থেকে issue ID আনুন
-    document.getElementById('modalContent').value = issueId; // মোডালের কন্টেন্ট পরিবর্তন
-    $('#modal-default').modal('show'); // Modal ম্যানুয়ালি শো করুন
-  });
-});
-
 </script>
 <script>
     @if(session('success'))
@@ -140,5 +125,9 @@
     @if(session('error'))
         toastr.error('{{ session('error') }}');
     @endif
+
+    function confirm_delete() {
+      return confirm('are you sure Return this Book?');
+    }
 </script>
 @endpush

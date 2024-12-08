@@ -24,6 +24,7 @@ class Issue extends Model
         return $this->hasOne(member::class,'id','member_id');
     }
 
+
     public function bookDetails()
     {
         return $this->hasOne(BookSelf::class,'id','book_name');

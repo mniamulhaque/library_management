@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\member;
+use App\Models\Issue;
 
 class memberCon extends Controller
 {
@@ -13,7 +14,8 @@ class memberCon extends Controller
     public function index()
     {
         $memberData = member::all();
-        return view('backend.member.memberList',compact('memberData'));
+        $issueData = Issue::all();
+        return view('backend.member.memberList',compact('memberData','issueData'));
     }
 
     /**

@@ -64,11 +64,12 @@
                   <td>{{$member->appointment}}</td>
                   <td>{{$member->unite}}</td>
                   <td>{{$member->mobile_no}}</td>
-                  <td class="h5"><a href="{{url('members/'.$member->id.'/edit')}}" class="text-secondary"><i class="far fa-edit"></i> </a>||<form action="{{ route('members.destroy', $member) }}" method="POST" style="display:inline;">
+                  <td class="h5"><a href="{{url('members/'.$member->id.'/edit')}}" class="text-secondary"><i class="far fa-edit"></i> </a>@if(count($member->issueDetails) == 0)||<form action="{{ route('members.destroy', $member) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button  onclick="return confirm_delete()" class="text-danger btn btn-link" type="submit"><i class="fas fa-trash-alt"></i></button>
                     </form>
+                   @endif
                   </td>
                 </tr>
                 @endforeach
@@ -120,7 +121,7 @@
 	// @enderror
 
     function confirm_delete() {
-      return confirm('are you sure?');
+      return confirm('are you sure delete this file?');
     }
 </script>
 @endpush

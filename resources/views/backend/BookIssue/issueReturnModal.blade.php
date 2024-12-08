@@ -17,7 +17,7 @@
               <div class="form-group">
                 <label for="year_of_publication">Return Date</label>
                 <input type="hidden" value="" id="modalContent" name="issueReturn_id">
-                <input type="date" class="form-control" id="return_date" name="realReturnDate" placeholder="Enter Mobile No" required>
+                <input type="date" class="form-control" id="return_date" name="realReturnDate" placeholder="Enter Mobile No">
               </div>
             </div>
          </div>

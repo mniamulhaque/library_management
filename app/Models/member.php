@@ -19,6 +19,6 @@ class member extends Model
 
     public function issueDetails()
     {
-        return $this->hasMany(Issue::class);
+        return $this->hasMany(Issue::class,'member_id','id');
     }
 }

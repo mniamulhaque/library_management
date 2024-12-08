@@ -70,15 +70,38 @@ class issueCon extends Controller
      */
     public function edit(string $id)
     {
-        //
+         $memberData = member::all();
+        //$BookSelfData = BookSelf::all();
+        $BookSelfData = DB::table('book_selves')
+        ->leftJoin('issues', function ($join) {
+            $join->on('book_selves.id', '=', 'issues.book_name')
+                 ->where('issues.status', '=', 'issued');
+        })
+        ->whereNull('issues.book_name')
+        ->select('book_selves.id','book_selves.accession', 'book_selves.titlee')
+        ->get();
+       $issueData = Issue::find($id);
+        return view('backend.BookIssue.addIssue',compact('memberData','BookSelfData','issueData'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, Issue $issue)
+    { 
+        $request->validate([
+            'issue_date' => 'required|string|max:255',
+            'member_id' => 'required',
+            'rank' => 'required|string|max:255',
+            'corps' => 'required|string|max:255',
+            'unite' => 'required|string|max:255',
+            'return_date' => 'required|string|max:255',
+            'book_name' => 'required|string|max:255',
+            'mobile_no' => 'required',
+        ]);
+
+         $issue->update($request->all());
+        return redirect()->route('issues.index')->with('success', 'Issue Update successfully.');
     }
 
     /**
@@ -90,21 +113,17 @@ class issueCon extends Controller
     }
 
 
-    public function returnIssuePost(Request $request){
+    public function returnIssue($id){
         //dd($request->issueReturn_id);
 
      
 
         // 2. Find the issue by ID
-        $issue = Issue::findOrFail($request->issueReturn_id);
+        $issue = Issue::findOrFail($id);
 
         // 3. Update the issue's status and realReturnDate
         $issue->status = '0';
-
-        if ($request->has('realReturnDate') && !empty($request->input('realReturnDate'))) {
-            $issue->realReturnDate = $request->input('realReturnDate');
-        }
-
+        $issue->realReturnDate = date('d-m-Y');
         // 4. Save the changes
         $issue->save();
 

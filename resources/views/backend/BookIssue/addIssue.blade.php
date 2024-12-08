@@ -13,12 +13,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Issue Form</h1>
+            <h1>{{ isset($issueData) ? 'Update' : 'Add' }} Issue Form</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Add Issue Form</li>
+              <li class="breadcrumb-item active">{{ isset($issueData) ? 'Update' : 'Add' }} Issue Form</li>
             </ol>
           </div>
         </div>
@@ -34,25 +34,28 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add Issue</h3>
+                <h3 class="card-title">{{ isset($issueData) ? 'Update' : 'Add' }} Issue</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-               <form action="{{ route('issues.store') }}" method="POST">
+               <form action="{{ isset($issueData) ? route('issues.update',$issueData->id) :route('issues.store') }}" method="POST">
                  @csrf
+                 @if (isset($issueData))
+                    @method('put')
+                 @endif
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="publisher">Issue Date</label>
-                        <input type="Date" class="form-control" id="issue_date" name="issue_date" required>
+                        <input type="Date" class="form-control" value="{{ isset($issueData) ? $issueData->issue_date : '' }}" id="issue_date" name="issue_date" required>
                       </div>
                     </div>
                     <div class="col-sm-6">
                        <div class="form-group">
                           <label>Army No</label>
                           <select class="form-control select2" style="width: 100%;" name="member_id" id="member_id" required>
-                            <option value="">Select Army Num--</option>
+                            <option value="{{ isset($issueData) ? $issueData->member_id : '' }}">{{ isset($issueData) ? $issueData->memberDetails->rank_no.'-'.$issueData->memberDetails->name : 'Select Army Num--' }}</option>
                             @foreach($memberData as $member)
                             <option value="{{$member->id}}">{{$member->rank_no.' - '.$member->name}}</option>
                             @endforeach
@@ -70,13 +73,13 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="year_of_publication">Mobile Number</label>
-                        <input type="number" class="form-control" id="mobile_no" name="mobile_no" placeholder="Enter Mobile No" required>
+                        <input type="number" class="form-control" value="{{ isset($issueData) ? $issueData->mobile_no : '' }}" id="mobile_no" name="mobile_no" placeholder="Enter Mobile No" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="title">Rank</label>
-                        <input type="text" class="form-control" id="rank" name="rank" placeholder="Enter Rank" required>
+                        <input type="text" value="{{ isset($issueData) ? $issueData->rank : '' }}" class="form-control" id="rank" name="rank" placeholder="Enter Rank" required>
                       </div>
                     </div>
                   </div>
@@ -84,13 +87,13 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="subject">Corps</label>
-                        <input type="text" class="form-control" id="corps" name="corps" placeholder="Enter Corps" required>
+                        <input type="text" value="{{ isset($issueData) ? $issueData->corps : '' }}" class="form-control" id="corps" name="corps" placeholder="Enter Corps" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="year_of_publication">Unite/Organization</label>
-                        <input type="Text" class="form-control" id="unite" name="unite" placeholder="Enter Unite/Organization" required>
+                        <input type="Text" value="{{ isset($issueData) ? $issueData->unite : '' }}" class="form-control" id="unite" name="unite" placeholder="Enter Unite/Organization" required>
                       </div>
                     </div>
                   </div>
@@ -99,7 +102,7 @@
                       <div class="form-group">
                         <label for="author">Book Name</label>
                          <select class="form-control select2" style="width: 100%;" id="book_name" name="book_name" required>
-                            <option value="">Select Book Name--</option>
+                            <option  value="{{ isset($issueData) ? $issueData->book_name : '' }}">{{ isset($issueData) ? $issueData->bookDetails->accession.'-'.$issueData->bookDetails->titlee : 'Select Book Name--' }}</option>
                             @foreach($BookSelfData as $BookSelf)
                             <option value="{{$BookSelf->id}}">{{$BookSelf->accession.' - '.$BookSelf->titlee}}</option>
                             @endforeach
@@ -109,7 +112,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="year_of_publication">Return Date</label>
-                        <input type="date" class="form-control" id="return_date" name="return_date" placeholder="Enter Mobile No" required>
+                        <input type="date" value="{{ isset($issueData) ? $issueData->return_date : '' }}" class="form-control" id="return_date" name="return_date" placeholder="Enter Mobile No" required>
                       </div>
                     </div>
                   </div>
@@ -118,7 +121,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">{{ isset($issueData) ? 'Update' : 'Submit' }}</button>
                 </div>
               </form>
             </div>

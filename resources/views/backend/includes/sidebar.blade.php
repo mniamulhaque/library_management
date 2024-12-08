@@ -122,7 +122,7 @@
               <li class="nav-item">
                 <a href="{{url('/uploadExcelCreate')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Upload Excel File</p>
+                  <p>Upload CSV File</p>
                 </a>
               </li>
               <li class="nav-item">
